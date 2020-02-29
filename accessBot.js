@@ -2,11 +2,13 @@
 const dialogflow = require('dialogflow');
 const uuid = require('uuid');
 
+
+runSample('small-talk-xyswkm');
 /**
  * Send a query to the dialogflow agent, and return the query result.
  * @param {string} projectId The project to be used
  */
-async function runSample(projectId = 'your-project-id') {
+async function runSample(projectId) {
   // A unique identifier for the given session
   const sessionId = uuid.v4();
 
