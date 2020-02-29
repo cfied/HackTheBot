@@ -1,0 +1,32 @@
+<html>
+   <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+      <title>AngularJS First Application</title>
+   </head>
+
+   <body>
+      <h1>Sample Application</h1>
+
+
+      <div ng-app="myApp" ng-controller="myCtrl">
+
+      <p>Today's welcome message is:</p>
+      <h1>{{myWelcome}}</h1>
+
+      </div>
+
+      <script>
+      var app = angular.module('myApp', []);
+      app.controller('myCtrl', function($scope, $http) {
+        $http({
+          method : "GET",
+          url : "/welcome"
+        }).then(function(response) {
+          $scope.myWelcome = response.data;
+        });
+      });
+      </script>
+
+
+   </body>
+</html>
