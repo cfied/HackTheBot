@@ -35,9 +35,9 @@ app.get('/welcome', function (req, res){
   res.send("Lovely to see you");
 })
 
-app.post('/message', function(req, res)){
+app.post('/message', function(req, res){
   console.log("received message");
-}
+})
 
 var server = app.listen(8081, function () {
    var host = server.address().address
