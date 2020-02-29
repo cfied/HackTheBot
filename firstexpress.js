@@ -5,8 +5,26 @@ var app = express();
 // This responds with "Hello World" on the homepage
 app.get('/', function (req, res) {
    console.log("Got a GET request for the homepage");
-   fs.readFile('testAngularJS.html', function(err, data) {
+   fs.readFile('chathtml.html', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(data);
+        res.end();
+      });
+})
+
+app.get('/css', function (req, res) {
+   console.log("Got a GET request for the homepage");
+   fs.readFile('chatcss.css', function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/css'});
+        res.write(data);
+        res.end();
+      });
+})
+
+app.get('/js', function (req, res) {
+   console.log("Got a GET request for the homepage");
+   fs.readFile('chatjs.js', function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/js'});
         res.write(data);
         res.end();
       });
