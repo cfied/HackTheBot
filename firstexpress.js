@@ -62,11 +62,67 @@ function compare(arr, array, string){
 	return item;
 }
 
-
-// This responds with "Hello World" on the homepage
+// welcome page
 app.get('/', function (req, res) {
    console.log("Got a GET request for the homepage");
-   fs.readFile('chathtml.html', function(err, data) {
+   fs.readFile('html/index.html', function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(data);
+        res.end();
+      });
+})
+
+app.get('/js_welcome', function (req, res) {
+   console.log("Got a GET request for the homepage");
+   fs.readFile('js/jque.js', function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/js'});
+        res.write(data);
+        res.end();
+      });
+})
+
+app.get('/css_welcome', function (req, res) {
+   console.log("Got a GET request for the homepage");
+   fs.readFile('css/style.css', function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/css'});
+        res.write(data);
+        res.end();
+      });
+})
+
+app.get('/css_boot', function (req, res) {
+   console.log("Got a GET request for the homepage");
+   fs.readFile('css/bootstrap.min.css', function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/css'});
+        res.write(data);
+        res.end();
+      });
+})
+
+app.get('/png_robot', function (req, res) {
+   console.log("Got a GET request for the homepage");
+   fs.readFile('images/ban-1.png', function(err, data) {
+        res.writeHead(200, {'Content-Type': 'image/png'});
+        res.write(data);
+        res.end();
+      });
+})
+
+app.get('/jpg_background', function (req, res) {
+   console.log("Got a GET request for the homepage");
+   fs.readFile('images/bg-1.jpg', function(err, data) {
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
+        res.write(data);
+        res.end();
+      });
+})
+
+
+
+// starting chat
+app.get('/chat', function (req, res) {
+   console.log("Got a GET request for the homepage");
+   fs.readFile('html/chat.html', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(data);
         res.end();
@@ -75,7 +131,7 @@ app.get('/', function (req, res) {
 
 app.get('/css', function (req, res) {
    console.log("Got a GET request for the homepage");
-   fs.readFile('chatcss.css', function(err, data) {
+   fs.readFile('css/chat.css', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/css'});
         res.write(data);
         res.end();
@@ -84,7 +140,7 @@ app.get('/css', function (req, res) {
 
 app.get('/js', function (req, res) {
    console.log("Got a GET request for the homepage");
-   fs.readFile('chatjs.js', function(err, data) {
+   fs.readFile('js/chat.js', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/js'});
         res.write(data);
         res.end();
