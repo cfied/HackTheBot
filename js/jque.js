@@ -1,10 +1,9 @@
 function request_access(){
-    console.log("Button clicked");
-    fetch('/chat', {
-      method: 'GET',
-      headers: {
-        Accept: 'text/html',
-        'Content-Type': 'text/html',
-      },
-    });
-}
+  x= Math.random();
+  if(x<0.5){
+    window.location.href = '/chat';
+  }
+  else{
+    window.location.href = '/chat';
+  }
+};
