@@ -38,32 +38,36 @@
             });
             message.draw();
             console.log(text);
-            if(p>0){
               // fetching bot-response
-              fetch('/message', {
-                method: 'POST',
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  message: text
-                })
-              }).then((response) => response.json())
-              .then((responseJson) => {
-                  console.log("received response");
-                  console.log((responseJson.answer));
-                  //sendMessage(response, 0)
-               })
-              .catch((error) => {
-                console.error(error);
-              });
-            }
+            fetch('/message', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                message: text
+              })
+            }).then((response) => response.json())
+            .then((responseJson) => {
+                console.log("received response");
+                console.log((responseJson.answer));
+                message_side = 'left';
+                message = new Message({
+                    text: responseJson.answer,
+                    message_side: message_side
+                });
+                message.draw();
+             })
+            .catch((error) => {
+              console.error(error);
+            });
+
 
             return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
         };
         $('.send_message').click(function (e) {
-            return sendMessage(getMessageText(),1);
+            return sendMessage(getMessageText());
         });
         $('.message_input').keyup(function (e) {
             if (e.which === 13) {
