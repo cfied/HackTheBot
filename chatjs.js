@@ -38,10 +38,25 @@
                 message_side: message_side
             });
             message.draw();
+            console.log(text);
+            // fetching bot-response
             fetch('/message', {
               method: 'POST',
-              body: text
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                message: text
+              })
+            }).then((response) => {
+                console.log("received response");
+                console.log(response);
+             })
+            .catch((error) => {
+              console.error(error);
             });
+
             return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
         };
         $('.send_message').click(function (e) {
