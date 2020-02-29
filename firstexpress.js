@@ -64,7 +64,7 @@ function compare(arr, array, string){
 
 // welcome page
 app.get('/', function (req, res) {
-   console.log("Got a GET request for the homepage");
+   //console.log("Got a GET request for the homepage");
    fs.readFile('html/index.html', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(data);
@@ -73,16 +73,16 @@ app.get('/', function (req, res) {
 })
 
 app.get('/js_welcome', function (req, res) {
-   console.log("Got a GET request for the homepage");
+   //console.log("Got a GET request for the homepage");
    fs.readFile('js/jque.js', function(err, data) {
-        res.writeHead(200, {'Content-Type': 'text/js'});
+        res.writeHead(200, {'Content-Type': 'application/javascript'});
         res.write(data);
         res.end();
       });
 })
 
 app.get('/css_welcome', function (req, res) {
-   console.log("Got a GET request for the homepage");
+   //console.log("Got a GET request for the homepage");
    fs.readFile('css/style.css', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/css'});
         res.write(data);
@@ -91,7 +91,7 @@ app.get('/css_welcome', function (req, res) {
 })
 
 app.get('/css_boot', function (req, res) {
-   console.log("Got a GET request for the homepage");
+   //console.log("Got a GET request for the homepage");
    fs.readFile('css/bootstrap.min.css', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/css'});
         res.write(data);
@@ -100,7 +100,7 @@ app.get('/css_boot', function (req, res) {
 })
 
 app.get('/png_robot', function (req, res) {
-   console.log("Got a GET request for the homepage");
+   //console.log("Got a GET request for the homepage");
    fs.readFile('images/ban-1.png', function(err, data) {
         res.writeHead(200, {'Content-Type': 'image/png'});
         res.write(data);
@@ -109,7 +109,7 @@ app.get('/png_robot', function (req, res) {
 })
 
 app.get('/jpg_background', function (req, res) {
-   console.log("Got a GET request for the homepage");
+   //console.log("Got a GET request for the homepage");
    fs.readFile('images/bg-1.jpg', function(err, data) {
         res.writeHead(200, {'Content-Type': 'image/jpg'});
         res.write(data);
@@ -123,25 +123,25 @@ app.get('/jpg_background', function (req, res) {
 app.get('/chat', function (req, res) {
    console.log("Got a GET request for the homepage");
    fs.readFile('html/chat.html', function(err, data) {
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(data);
-        res.end();
-      });
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.write(data);
+      res.end();
+   });
 })
 
 app.get('/css', function (req, res) {
-   console.log("Got a GET request for the homepage");
+   //console.log("Got a GET request for the homepage");
    fs.readFile('css/chat.css', function(err, data) {
-        res.writeHead(200, {'Content-Type': 'text/css'});
-        res.write(data);
-        res.end();
-      });
+      res.writeHead(200, {'Content-Type': 'text/css'});
+      res.write(data);
+      res.end();
+   });
 })
 
 app.get('/js', function (req, res) {
-   console.log("Got a GET request for the homepage");
+   //console.log("Got a GET request for the homepage");
    fs.readFile('js/chat.js', function(err, data) {
-        res.writeHead(200, {'Content-Type': 'text/js'});
+        res.writeHead(200, {'Content-Type': 'application/javascript'});
         res.write(data);
         res.end();
       });
@@ -155,8 +155,9 @@ app.get('/welcome', function (req, res){
 //figure out if to send as string or create json file
 app.post('/message', function(req, res){
   console.log("responded:");
-//	res.writeHead(200, {'Content-Type': 'application/json'});
-	res.write(respond(JSON.stringify(req.body.message)));
+	res.writeHead(200, {'Content-Type': 'application/json'});
+	var jsonObj = {'answer':respond(JSON.stringify(req.body.message))};
+	res.write(JSON.stringify(jsonObj));
 	res.end();
 })
 

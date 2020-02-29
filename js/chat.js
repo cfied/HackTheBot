@@ -21,10 +21,9 @@
         getMessageText = function () {
             var $message_input;
             $message_input = $('.message_input');
-           // $.post("/message", {text= $message_input.val()}) //attempt to post
             return $message_input.val();
         };
-        sendMessage = function (text) {
+        sendMessage = function (text, p) {
             var $messages, message;
             if (text.trim() === '') {
                 return;
@@ -39,28 +38,32 @@
             });
             message.draw();
             console.log(text);
-            // fetching bot-response
-            fetch('/message', {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                message: text
-              })
-            }).then((response) => {
-                console.log("received response");
-                console.log(response);
-             })
-            .catch((error) => {
-              console.error(error);
-            });
+            if(p>0){
+              // fetching bot-response
+              fetch('/message', {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  message: text
+                })
+              }).then((response) => response.json())
+              .then((responseJson) => {
+                  console.log("received response");
+                  console.log((responseJson.answer));
+                  //sendMessage(response, 0)
+               })
+              .catch((error) => {
+                console.error(error);
+              });
+            }
 
             return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
         };
         $('.send_message').click(function (e) {
-            return sendMessage(getMessageText());
+            return sendMessage(getMessageText(),1);
         });
         $('.message_input').keyup(function (e) {
             if (e.which === 13) {
