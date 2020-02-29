@@ -10,8 +10,8 @@
   .chat_window {
     position: absolute;
     width: calc(100% - 20px);
-    max-width: 800px;
-    height: 500px;
+    max-width: 10000px;
+    height: 700px;
     border-radius: 10px;
     background-color: #fff;
     left: 50%;
@@ -40,15 +40,15 @@
     margin-right: 10px;
     position: relative;
   }
-  .top_menu .buttons .button.close {
-    background-color: #f5886e;
+  /*.top_menu .buttons .button.close {
+   background-color: #f5886e;
   }
   .top_menu .buttons .button.minimize {
     background-color: #fdbf68;
   }
   .top_menu .buttons .button.maximize {
     background-color: #a3d063;
-  }
+  }*/
   .top_menu .title {
     text-align: center;
     color: #bcbdc0;
