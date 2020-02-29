@@ -1,5 +1,6 @@
 (function () {
     var Message;
+    alert(12);
     Message = function (arg) {
         this.text = arg.text, this.message_side = arg.message_side;
         this.draw = function (_this) {
