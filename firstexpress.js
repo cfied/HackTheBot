@@ -36,6 +36,7 @@ app.get('/welcome', function (req, res){
 })
 
 app.post('/message', function(req, res){
+//analyze req.body and return analysed text
   console.log("received message");
 })
 

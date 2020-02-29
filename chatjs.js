@@ -31,12 +31,17 @@
             }
             $('.message_input').val('');
             $messages = $('.messages');
-            message_side = message_side === 'left' ? 'right' : 'left';
+            //message_side = message_side === 'left' ? 'right' : 'left';
+            message_side = 'right';
             message = new Message({
                 text: text,
                 message_side: message_side
             });
             message.draw();
+            fetch('/message', {
+              method: 'POST',
+              body: text
+            });
             return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
         };
         $('.send_message').click(function (e) {
