@@ -28,7 +28,7 @@ var trigger = [
 ["when were you born", "when do you have birthday", "when is your birthday", "your birth date", "when do you celebrate your birthday",
 "date of your birthday", "what's your birthday"],
 ["you are very boring", "you are boring me", "how boring you are", "you are so boring", "you are boring", "you are really boring",
-"you are incredibly boring],["who is your boss", "who is the boss", "who do you work for", "who do you think is your boss",
+"you are incredibly boring"],["who is your boss", "who is the boss", "who do you work for", "who do you think is your boss",
 "I should be your boss", "who is your master", "who is your owner"],
 ["are you busy", "are you working today", "you're very busy", "have you got much to do", "are you very busy right now",
 "are you working", "have you been busy", "you seem to be very busy", "do you have a lot of things to do", "you are busy"],
