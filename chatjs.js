@@ -21,6 +21,7 @@
         getMessageText = function () {
             var $message_input;
             $message_input = $('.message_input');
+           // $.post("/message", {text= $message_input.val()}) //attempt to post
             return $message_input.val();
         };
         sendMessage = function (text) {
@@ -46,12 +47,12 @@
                 return sendMessage(getMessageText());
             }
         });
-        sendMessage('Hello Philip! :)');
-        setTimeout(function () {
-            return sendMessage('Hi Sandy! How are you?');
-        }, 1000);
-        return setTimeout(function () {
-            return sendMessage('I\'m fine, thank you!');
-        }, 2000);
+        //sendMessage('Hello Philip! :)');
+        //setTimeout(function () {
+          //  return sendMessage('Hi Sandy! How are you?');
+        //}, 1000);
+        //return setTimeout(function () {
+          //  return sendMessage('I\'m fine, thank you!');
+        //}, 2000);
     });
 }.call(this));
