@@ -10,6 +10,7 @@ var messages = new Array();
 app.use(express.json());
 
 io.on('connection', function(socket){
+	console.log("In server io function");
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
   });
@@ -216,4 +217,6 @@ var server = app.listen(8081, function () {
    var port = server.address().port
 
    console.log("Example app listening at http://%s:%s", host, port)
+	 console.log(reply.length);
+	 console.log(trigger.length);
 })
