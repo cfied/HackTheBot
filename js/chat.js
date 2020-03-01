@@ -28,7 +28,7 @@ socket.on('connect', () => {
             $message_input = $('.message_input');
             return $message_input.val();
         };
-        sendMessage = function (text, p) {
+        sendMessage = function (text) {
             var $messages, message;
             if (text.trim() === '') {
                 return;
@@ -78,8 +78,7 @@ socket.on('connect', () => {
             socket.on('connect',() =>{
               console.log(socket.id);
             });
-          //  socket.emit('chat message', $('#m').val());
-          //  $('#m').val('');
+            socket.emit('chat message', getMessageText);
           }catch(error){
             console.log(error);
           }
@@ -88,19 +87,22 @@ socket.on('connect', () => {
         });
         $('.message_input').keyup(function (e) {
             if (e.which === 13) {
-                return sendMessage(getMessageText());
+              try{
+                socket.on('connect',() =>{
+                  console.log(socket.id);
+                });
+                socket.emit('chat message', getMessageText);
+              }catch(error){
+                console.log(error);
+              }
+              console.log(socket);
+              return sendMessage(getMessageText());
             }
         });
     /*    socket.on('chat message', function(msg){
                   $('#messages').append($('<li>').text(msg));
                   window.scrollTo(0, document.body.scrollHeight);
                 });*/
-        //sendMessage('Hello Philip! :)');
-        //setTimeout(function () {
-          //  return sendMessage('Hi Sandy! How are you?');
-        //}, 1000);
-        //return setTimeout(function () {
-          //  return sendMessage('I\'m fine, thank you!');
-        //}, 2000);
+
     });
 }.call(this));

@@ -26,6 +26,7 @@ io.on('connection', function(socket){
 
 
 
+
 var trigger = [
 	["tell me some stuff about you", "tell me about you", "say about you",
 	"tell me about your personality", "talk about yourself", "talk some stuff about yourself",
@@ -335,6 +336,7 @@ app.post('/message', function(req, res){
 })
 
 http.listen(8081, function () {
-
+	 console.log(trigger.length)
+	 console.log(reply.length)
    console.log("Example app listening")
 })
