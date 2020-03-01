@@ -57,7 +57,10 @@
                     text: responseJson.answer,
                     message_side: message_side
                 });
-                message.draw();
+                var l = text.length*800;
+                setTimeout(function () {
+                  message.draw();
+                }, l);
              })
             .catch((error) => {
               console.error(error);
@@ -67,6 +70,9 @@
             return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
         };
         $('.send_message').click(function (e) {
+            var socket = io();
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
             return sendMessage(getMessageText());
         });
         $('.message_input').keyup(function (e) {
@@ -74,6 +80,10 @@
                 return sendMessage(getMessageText());
             }
         });
+        socket.on('chat message', function(msg){
+                  $('#messages').append($('<li>').text(msg));
+                  window.scrollTo(0, document.body.scrollHeight);
+                });
         //sendMessage('Hello Philip! :)');
         //setTimeout(function () {
           //  return sendMessage('Hi Sandy! How are you?');

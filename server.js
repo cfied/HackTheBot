@@ -126,7 +126,7 @@ var reply = [
 	["ikr!!", "agreed:)", "I agree heheh", "yay I'm glad u think so:)"],
 	["oh well oh well"],
 	["alright:)", "glad to hear that:)", "nice!!:)", "cool shit hehe"],
-	["no worries:)", "it's alright haha:)", "you're welcome:)"]
+	["no worries:)", "it's alright haha:)", "you're welcome:)"],
 	["aw you're so polite!!", "aww:)"],
 	["fuck youuuuu toooooooooooo"],
 	["hallöchen popöchennnnnnnnnnnnn und jetzt mach die scheiße hier gefälligst auf englisch!!!"],
@@ -134,11 +134,9 @@ var reply = [
 	["you are a fucking puta, speak english u piece of shit:)"],
 	["thanks!!", "always happy to help!!:)"],
 	["okay sure if u want. cancelled.", "cancelled!! what would you like to do now??"],
-	["hi:)", "heyy", "hellooo", "hiya", "hey:)", "hi wassup"],
-	["lkjljsafdlkfj"] //das ist Sarahs Schuld und dieser Kommentar bleibt so
-	//lange hier stehen bis sie den Fehler gefunden hat
+	["hi:)", "heyy", "hellooo", "hiya", "hey:)", "hi wassup"]
 
-	//der Rest von dem mittelmäßigen kram ist mein Verschulden
+	//der mittelmäßige kram ist mein Verschulden
 	//und dieser kommentar wird wohl leider nicht demnächst entfernt werden können
 ];
 var alternative = ["Haha...", "Eh...", "Sorry cant talk right now", "Youre annoying. I dont want to talk about it", "what are you talking about", "Maybe.. lets see", "Well, what do you think about it?"];
@@ -275,6 +273,4 @@ var server = app.listen(8081, function () {
    var port = server.address().port
 
    console.log("Example app listening at http://%s:%s", host, port)
-	 console.log(reply.length);
-	 console.log(trigger.length);
 })
