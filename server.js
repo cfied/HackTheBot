@@ -1,8 +1,8 @@
 var express = require('express');
 var fs = require('fs');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var app = express();
 var port = process.env.PORT || 8081;
 
 var messages = new Array();
@@ -17,11 +17,13 @@ app.use(express.json());
 });*/
 
 io.on('connection', function(socket){
-	console.log('a user connected');
-	socket.on('disconnect', function(){
-		console.log('user disconnected');
-	});
+  console.log('user connected');
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+    console.log("Socket message: " + msg);
+  });
 });
+
 
 
 var trigger = [
@@ -332,9 +334,7 @@ app.post('/message', function(req, res){
 	res.end();
 })
 
-var server = app.listen(8081, function () {
-   var host = server.address().address
-   var port = server.address().port
+http.listen(8081, function () {
 
-   console.log("Example app listening at http://%s:%s", host, port)
+   console.log("Example app listening")
 })

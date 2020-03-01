@@ -1,3 +1,8 @@
+var socket = io();
+socket.on('connect', () => {
+  console.log(socket.id);
+});
+
 (function () {
     var Message;
     Message = function (arg) {
@@ -30,7 +35,6 @@
             }
             $('.message_input').val('');
             $messages = $('.messages');
-            //message_side = message_side === 'left' ? 'right' : 'left';
             message_side = 'right';
             message = new Message({
                 text: text,
@@ -70,10 +74,17 @@
             return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
         };
         $('.send_message').click(function (e) {
-      /*      var socket = io();
-            socket.emit('chat message', $('#m').val());
-            $('#m').val('');*/
-            return sendMessage(getMessageText());
+          try{
+            socket.on('connect',() =>{
+              console.log(socket.id);
+            });
+          //  socket.emit('chat message', $('#m').val());
+          //  $('#m').val('');
+          }catch(error){
+            console.log(error);
+          }
+          console.log(socket);
+          return sendMessage(getMessageText());
         });
         $('.message_input').keyup(function (e) {
             if (e.which === 13) {
