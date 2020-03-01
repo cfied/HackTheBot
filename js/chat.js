@@ -92,6 +92,7 @@ socket.on('connect', () => {
                   console.log(socket.id);
                 });
                 socket.emit('chat message', getMessageText);
+                console.log(socket);
               }catch(error){
                 console.log(error);
               }
@@ -103,6 +104,7 @@ socket.on('connect', () => {
                   $('#messages').append($('<li>').text(msg));
                   window.scrollTo(0, document.body.scrollHeight);
                 });*/
+
 
     });
 }.call(this));
