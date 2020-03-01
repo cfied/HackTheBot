@@ -1,8 +1,20 @@
 var express = require('express');
 var fs = require('fs');
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var app = express();
+var port = process.env.PORT || 8081;
+
+var messages = new Array();
 
 app.use(express.json());
+
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
+});
+
 
 var trigger = [
 	["tell me some stuff about you", "tell me about you", "say about you",
@@ -70,11 +82,10 @@ var reply = [
 	["aww thanks!! u too:)", "thank youuu u tooooo", "aww you just made my day!!! u too:))"],
 	["not really haha but its fine dont worry", "kinda...kinda not though...", "happiness is relative..."]
 ];
-var alternative = ["Haha...", "Eh..."];
+var alternative = ["Haha...", "Eh...", "Sorry cant talk right now", "Youre annoying. I dont want to talk about it", "what are you talking about", "Maybe.. lets see", "Well, what do you think about it?"];
 
 
 function respond(input){
-	//onsole.log(input);
   var text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, ""); //remove all chars except words, space and
   text = text.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "").replace(/['"]+/g, '');
   if(compare(trigger, reply, text)){
