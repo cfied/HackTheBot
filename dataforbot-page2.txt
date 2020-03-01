@@ -24,17 +24,8 @@ triggers
 ["wie geht es dir", "wie gehts", "wie gehts dir", "wie gehts ihnen", "wie geht es ihnen"],
 ["hola"],
 ["great work", "bravo", way to go", "great job", "good work", "amazing work", "well done", "good job", "nice work"],
-["thanks!!", "always happy to help!!:)"],
 ["sorry cancel", "now cancel", "can you cancel it", "just forget about it", "nothing just forget it", "cancel", "abort mission"],
 ["afternoon", "hello there", "hiya", "hi there", "hello hi", "greetings", "hey", "hi", "hello", "howdy", "heyy", "heyyy", "heyho", "hey love", "hi love"]
-
-
-
-
-
-
-
-
 
 
 
@@ -65,9 +56,6 @@ responses
 ["hallöchen popöchennnnnnnnnnnnn und jetzt mach die scheiße hier gefälligst auf englisch!!!"],
 [absolut scheiße ich hasse dich ich hasse die welt und ich hasse deutsch also frag mich was auf englisch],
 ["you are a fucking puta, speak english u piece of shit:)"],
+["thanks!!", "always happy to help!!:)"],
 ["okay sure if u want. cancelled.", "cancelled!! what would you like to do now??"],
 ["hi:)", "heyy", "hellooo", "hiya", "hey:)", "hi wassup"]
-
-
-
-
