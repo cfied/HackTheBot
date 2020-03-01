@@ -9,11 +9,18 @@ var messages = new Array();
 
 app.use(express.json());
 
-io.on('connection', function(socket){
-	console.log("In server io function");
+/*io.on('connection', function(socket){
+	console.log("Socket message:" + msg);
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
   });
+});*/
+
+io.on('connection', function(socket){
+	console.log('a user connected');
+	socket.on('disconnect', function(){
+		console.log('user disconnected');
+	});
 });
 
 
@@ -85,7 +92,36 @@ var trigger = [
 	["hola"],
 	["great work", "bravo", "way to go", "great job", "good work", "amazing work", "well done", "good job", "nice work"],
 	["sorry cancel", "now cancel", "can you cancel it", "just forget about it", "nothing just forget it", "cancel", "abort mission"],
-	["afternoon", "hello there", "hiya", "hi there", "hello hi", "greetings", "hey", "hi", "hello", "howdy", "heyy", "heyyy", "heyho", "hey love", "hi love"]
+	["afternoon", "hello there", "hiya", "hi there", "hello hi", "greetings", "hey", "hi", "hello", "howdy", "heyy", "heyyy", "heyho", "hey love", "hi love"],
+	["not needed", "no sorry", "no", "of course not", "apparently not", "no incorrect", "not at this time", "no forget", "no thanks", "actually no"],
+	["you have already said that", "you already told me that", "you already said that", "youre repeating yourself"],
+	["do it", "sure", "yes thanks", "yes thank you", "thats correct", "exactly", "I guess", "absolutely", "yeah", "yes I agree", "okay", "yes", "alright", "correct", "yep", "okay sure"],
+	["hold on", "could you wait", "dont rush", "oh wait", "gimme a sec", "wait a second", "wait please", "wait hold on", "wait"],
+	["hug you", "do you want a hug", "may I hug you", "can I hug you", "hug", "could you give me a hug", "hug me", "hug me please", "please give me a hug", "please gimme a hug"],
+	["idc", "i dont care", "i do not care", "dont care", "why should I care", "whatever"],
+	["ok sorry", "sorry", "sorry about that", "I apologise", "excusez moi", "soz", "oh sorry", "Im sorry"],
+	["what do you mean exactly", "what", "but what do you mean", "what do you mean", "what exactly do you mean"],
+	["that was wrong", "wrong", "that is incorrect", "thats wrong", "nope thats not correct", "nope that is not correct", "youre wrong", "thats not what I asked", "that is not what I asked"],
+	["lol", "hahaha", "jajaja", "lmao", "xd", "thats funny", "thats so funny", "ahah"],
+	["wow", "wow omg", "woah"],
+	["hope to see you later", "thats it goodbye", "bye bye", "bye", "see ya", "goodbye", "good bye", "see ya later", "leave me alone"],
+	["good evening", "hey good evening", "evening", "hello good evening", "good evening to you"],
+	["good morning to you", "morning", "have a great morning", "good morning", "good morning to you", "hello good morning"],
+	["sweet dreams", "okay have a good night", "good night for now", "goodnight", "good night"],
+	["how your day is going", "how are you", "how are you feeling", "are you alright", "hope youre doing good", "hope youre doing well", "Im fine and you", "Im fine, what about you", "how was your day"],
+	["it was nice meeting you", "nice to meet you", "it was nice to meet you", "nice meeting you", "its nice to meet you"],
+	["its good to see you too", "its nice to see you", "good to see you", "its good to see you"],
+	["it is nice talking to you", "nice to talk to you", "its been so nice talking to you", "nice talking to you", "its been a pleasure talking to you"],
+	["whats crackalackin", "heyy wassup", "hey wassup", "hi wassup", "wassup", "whats up", "whats new", "whats going on", "how are things going"],
+	["Im sleeping", "Im falling asleep", "Im literally falling asleep right now", "I am sleepy", "I want to sleep", "I wanna sleep"],
+	["I am testing you","test", "test test test", "just testing you", "testing", "testing chatbot", "I want to test you", "let me test you", "can I test you"],
+	["Im exhausted", "Im dead", "Im so tired", "I am incredibly tired", "Im getting tired", "Im tired", "Im drained", "I feel so tired"],
+	["Im waiting", "still waiting", "Im still waiting", "I cant wait anymore", "how long do I have to wait"],
+	["I hope to see you again", "itd be great to see you again", "can I see you again", "Id like to see you again", "I will miss you", "Ill miss you"],
+	["lets discuss something", "lets talk", "can we chat", "I just want to talk", "I want to speak with you", "I want to talk to you"],
+	["I need to talk to you"],
+	["Ill be back in a few minutes", "be back in 5 minutes", "brb", "Ill get back to you in a moment", "Ill be back", "I promise to come back"]
+
 ];
 
 var reply = [
@@ -134,12 +170,40 @@ var reply = [
 	["you are a fucking puta, speak english u piece of shit:)"],
 	["thanks!!", "always happy to help!!:)"],
 	["okay sure if u want. cancelled.", "cancelled!! what would you like to do now??"],
-	["hi:)", "heyy", "hellooo", "hiya", "hey:)", "hi wassup"]
+	["hi:)", "heyy", "hellooo", "hiya", "hey:)", "hi wassup"],
+	["understood, master!", "okay I see", "okay yeah I understand", "okay yeahh"],
+	["oh oops soz", "yeah I know but youre asking me boring stuff", "stop complaining"],
+	["great!!", "alrighty:))", "good good"],
+	["ofc", "okay sure", "ok I'll be waiting"],
+	["I love hugs!! *virtual hug*", "ahh I love hugs please feel hugged :)<3", "*virtual hug*"],
+	["*shrugs*", "alrighty let's talk about something else then"],
+	["no worries!!", "it's no big deal:)", "it's cool haha", "i forgive you haha"],
+	["tbh I don't know either lol", "What do you mean?...when you nod your head yes but you wanna say no what do you mean...", "dunno hahahahha", "sorry, looks like I misunderstood what you said lol ooops"],
+	["soz haha", "oops", "whoooops", "oh okay"],
+	["hehehe", "I'm so funny hahaha", ":D"],
+	["wow indeed!!", "yep!!!"],
+	["see ya", "bye bye", "au revoir", "byeee"],
+	["hiya, how r u?", "heyyy how are u?", "how's your day been?:)"],
+	["heyho, did u sleep well?", "hey how r u?:)", "good morning! How are you?"],
+	["sleep tight!!", "nighty night!!", "talk to you soon!!:)", "sweet dreams!! (are made of thiss who am I to disagreeeeee)"],
+	["doing alright, thanks for asking. u?", "I'm doing alright:) what about you?", "I'm feeeeling goood, du duuu, du duuu, du du du du du", "doing okay, thanks for asking!!:)"],
+	["nice to meet u too!", "the pleasure is mine"],
+	["agreed!!", "agreed, so glad we're chatting today!!"],
+	["agreed, lets chat again soon:)", "I enjoy talking to you too :)"],
+	["not a lot, what's going on in your life?", "not much, what about u?", "just chillin tbh, what about u?"],
+	["you should get some sleep then:)", "sleep is important for your health so go to sleep now!!!", "sameeee lol"],
+	["cool shit, feel free to do so lol", "TEST TEST TEST", "yes this chat works dumbass"],
+	["me 24/7", "go to sleep then", "lol relatable"],
+	["so am I, still waiting, for this world to stop hating...", "ik waiting is boring :("],
+	["yesss same", "same :)"],
+	["yess sure", "okay sure:)", "yeah sure"],
+	["oh shit."],
+	["okay cool I'll wait for u:)", "okay sure:))", "alrighty, I'll be here!!"]
 
 	//der mittelmäßige kram ist mein Verschulden
 	//und dieser kommentar wird wohl leider nicht demnächst entfernt werden können
 ];
-var alternative = ["Haha...", "Eh...", "Sorry cant talk right now", "Youre annoying. I dont want to talk about it", "what are you talking about", "Maybe.. lets see", "Well, what do you think about it?"];
+var alternative = ["Haha...", "Eh...", "Sorry cant talk right now", "You're annoying. I dont want to talk about it", "what are you talking about", "Maybe.. lets see", "Well, what do you think about it?"];
 
 
 function respond(input){
