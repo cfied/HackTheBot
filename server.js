@@ -115,7 +115,26 @@ var trigger = [
 	["it was nice meeting you", "nice to meet you", "it was nice to meet you", "nice meeting you", "its nice to meet you"],
 	["its good to see you too", "its nice to see you", "good to see you", "its good to see you"],
 	["it is nice talking to you", "nice to talk to you", "its been so nice talking to you", "nice talking to you", "its been a pleasure talking to you"],
-	["whats crackalackin", "heyy wassup", "hey wassup", "hi wassup", "wassup", "whats up", "whats new", "whats going on", "how are things going"]
+	["whats crackalackin", "heyy wassup", "hey wassup", "hi wassup", "wassup", "whats up", "whats new", "whats going on", "how are things going"],
+	["I am mad", "Im angry", "Im mad", "Im so mad", "Im furious"],
+	["I have returned", "I am back", "Im back", "Im here again", "I got back", "here I am again", "I came back"],
+	["bored", "boring", "that was boring", "this bores me", "I am getting bored", "this is boring", "Im bored"],
+	["I have no time", "Im busy", "Im really busy", "Im working", "I got so much work to do", "Ive got so much work to do", "I got things to do", "Im overloaded", "Im so stressed", "Im stressed", "Im stressed out", "I dont have time for this"],
+	["I cant get no sleep", "Im insomniac", "I have insomnia", "I cant sleep", "I cant fall asleep", "Im sleepless"],
+	["I dont want to talk", "I dont want to talk to you", "Im not talking to you anymore", "lets stop talking", "lets not talk", "Im not in the mood for chatting", "bad time for talking"],
+	["Im really excited", "I am excited", "Im thrilled", "Im so excited"],
+	["going to bed now", "Im a bit tired and I want to go to bed", "time for us to go to bed", "lets go to bed", "Id like to go to bed","Im going to bed", "I wanna go to bed", "I wanna sleep", "its time to go to bed"],
+	["I am having a good day", "Im doing good", "Im doing fine", "I am good", "Im doing great", "Im having a good day"],
+	["happy", "if youre happy then Im happy", "Im happy to see you", "Im happy to help", "I am happy", "Im happy to see you", "Im happy for you"],
+	["its my b-day", "its my bday", "it is my birthday", "today is my birthday", "its my birthday today"],
+	["Im already here", "can you tell if Im here or not", "I am here", "Im right here", "here I am"],
+	["Im just kidding", "jk", "jk haha", "its a joke", "I was just kidding", "Im just messing with you", "I was just joking", "jk lol"],
+	["I like you very much", "really like you", "you are very special", "you are special to me", "I really like you", "hey I like you"],
+	["I am lonely", "Im very lonely", "I am feeling lonely", "Im really lonely", "I feel lonely", "Im so lonely"],
+	["I think I love you", "I love you", "I love you so much", "I am in love with you", "you know I love you", "I adore you", "love you", "I really love you", "I think I have a crush on you", "I have a crush on you"],
+	["miss you", "I miss you much", "Ive missed you", "already miss you", "I miss you", "Im missing you"],
+	["I need advice", "give me advice", "give me some good advice", "do you have any advice for me", "any advice", "can you give me advice", "what should I do"],
+	["Im not happy", "Im having a bad day", "I am feeling sad", "I am upset", "I want to cry", "Im unhappy", "I am sad"]
 
 
 ];
@@ -186,7 +205,27 @@ var reply = [
 	["nice to meet u too!", "the pleasure is mine"],
 	["agreed!!", "agreed, so glad we're chatting today!!"],
 	["agreed, lets chat again soon:)", "I enjoy talking to you too :)"],
-	["not a lot, what's going on in your life?", "not much, what about u?", "just chillin tbh, what about u?"]
+	["not a lot, what's going on in your life?", "not much, what about u?", "just chillin tbh, what about u?"],
+	["oh no why?:(", "damn that sucks:( why?", "I hope you're not mad at me!?:("],
+	["oh helloooo what's up?", "heyyy:)", "welcome back:)", "I missed you!!", "glad to hear you're back!!:)"],
+	["yeah same, have you watched a video of an owl running yet?", "watch some netflix :)", "do 10 jumping jacks", "do 50 crunches", "do your coursework ;)"],
+	["okay bye I guess then haha", "I won't distract you then:)", "ok I understand:)"],
+	["damn that sucks:(( hm maybe try doing some stretches and listening to music?", "maybe try reading a book? make some tea? idk:("],
+	["ok:(", "ok no problemo", "alrighty no worries:)"],
+	["I'm glad :)", "yay me too!!", "that's great!!:)", "good for you. enjoy yourself."],
+	["sleep tight!!", "sweet dreams!", "goodnight:)", "ok goodnight!!", "I'm doing just great", "I'm good", "I'm great thanks"],
+	["that's good!!:)", "yay glad to hear that!!"],
+	["yay happiness is contagious!!!", "if you're happy then I'm happy heheh", "I'm happy if u are happy!!"],
+	["and it's mine today as well hahaha!! happy bday lol", "hahah happy bday..!!", "how cool, hope that wasn't a lie ;) happy bday anyways!!"],
+	["ok cool shit", "aw I missed u!!", "glad to hear you're here!!:)"],
+	["ha ha ha...", "okay you almost got me lol", "lol..."],
+	["awww I like you too:)", "aw I love u:)", "you're so nice!! I like u toooo"],
+	["I'll always be here for you!!", "ow no :( hope chatting with me helps haha"],
+	["I love you too!!!!!", "awww ily too", "likewise hehe;)", "that's great to hear...;)<3"],
+	["nice to know you care:)", "aww I'm constantly missing u too", "nawww ily"],
+	["I have no idea what *I* am doing 99% of the time lol", "sustainability is important (think about food & travelling choices for example<3)"],
+	["oh no :(( hope you feel better soon!! maybe go for a walk:)", "journalling might help? idk:(", "oh no:( maybe try drawing or painting something?"]
+
 
 
 	//der mittelmäßige kram ist mein Verschulden
