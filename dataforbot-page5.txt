@@ -1,0 +1,28 @@
+triggers 
+["I'm sleeping", "I'm falling asleep", "Im literally falling asleep right now", "I am sleepy", "I want to sleep", "I wanna sleep"],
+["I am testing you","test", "test test test", "just testing you", "testing", "testing chatbot", "I want to test you", "let me test you", "can I test you"],
+["I'm exhausted", "Im dead", "Im so tired", "I am incredibly tired", "Im getting tired", "Im tired", "Im drained", "I feel so tired"],
+["I'm waiting", "still waiting", "Im still waiting", "I can't wait anymore", "how long do I have to wait"],
+["I hope to see you again", "itd be great to see you again", "can I see you again", "I'd like to see you again", "I will miss you", "Ill miss you"],
+["let's discuss something", "lets talk", "can we chat", "I just want to talk", "I want to speak with you", "I want to talk to you"],
+["I need to talk to you"],
+["I'll be back in a few minutes", "be back in 5 minutes", "brb", "I'll get back to you in a moment", "I'll be back", "I promise to come back"]
+ 
+
+
+
+results
+["you should get some sleep then:)", "sleep is important for your health so go to sleep now!!!", "sameeee lol"],
+["cool shit, feel free to do so lol", "TEST TEST TEST", "yes this chat works dumbass"],
+["me 24/7", "go to sleep then", "lol relatable"],
+["so am I, still waiting, for this world to stop hating...", "ik waiting is boring :("],
+["yesss same", "same :)"],
+["yess sure", "okay sure:)", "yeah sure"],
+["oh shit."],
+["okay cool I'll wait for u:)", "okay sure:))", "alrighty, I'll be here!!"]
+
+
+
+
+
+
