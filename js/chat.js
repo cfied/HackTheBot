@@ -75,9 +75,9 @@ socket.on('connect', () => {
         };
         $('.send_message').click(function (e) {
           try{
-            socket.on('connect',() =>{
-              console.log(socket.id);
-            });
+      //      socket.on('connect',() =>{
+      //        console.log(socket.id);
+      //      });
             socket.emit('chat message', getMessageText);
           }catch(error){
             console.log(error);
@@ -88,9 +88,9 @@ socket.on('connect', () => {
         $('.message_input').keyup(function (e) {
             if (e.which === 13) {
               try{
-                socket.on('connect',() =>{
-                  console.log(socket.id);
-                });
+      //          socket.on('connect',() =>{
+      //            console.log(socket.id);
+      //          });
                 socket.emit('chat message', getMessageText);
                 console.log(socket);
               }catch(error){
@@ -100,10 +100,11 @@ socket.on('connect', () => {
               return sendMessage(getMessageText());
             }
         });
-    /*    socket.on('chat message', function(msg){
-                  $('#messages').append($('<li>').text(msg));
-                  window.scrollTo(0, document.body.scrollHeight);
-                });*/
+        socket.on('chat message', function(msg){
+            console.log(text(msg));
+            sendMessage(text(msg));
+            window.scrollTo(0, document.body.scrollHeight);
+        });
 
 
     });

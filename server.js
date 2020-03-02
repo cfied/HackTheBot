@@ -3,7 +3,7 @@ var fs = require('fs');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var port = process.env.PORT || 8081;
+var port = process.env.PORT || 3000;
 
 var messages = new Array();
 
@@ -17,10 +17,10 @@ app.use(express.json());
 });*/
 
 io.on('connection', function(socket){
-  //console.log('user connected');
+  console.log('user connected');
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-    console.log("Socket message: " + msg);
+		console.log("Socket message: " + msg);
+		socket.broadcast.emit();
   });
 });
 
@@ -376,7 +376,7 @@ app.post('/message', function(req, res){
 	res.end();
 })
 
-http.listen(8081, function () {
+http.listen(3000, function () {
 	 console.log(trigger.length)
 	 console.log(reply.length)
    console.log("Example app listening")
