@@ -7,21 +7,23 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
 
-var messages = new Array();
+var messages = [];
+
+console.log(messages);
 
 app.use(express.json());
 
-/*io.on('connection', function(socket){
-	console.log("Socket message:" + msg);
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-  });
-});*/
 
 io.on('connection', function(socket){
   console.log('user connected');
+  for(var i = 0; i < messages.length; i++){
+    socket.emit('chat message', messages[i]);
+    console.log(messages[i]);
+  }
   socket.on('chat message', function(msg){
 		console.log("Socket message: " + msg);
+    messages.push(msg);
+    console.log(messages.toString())
     if(mode == 1){
 		  socket.broadcast.emit('chat message', msg);
     }
