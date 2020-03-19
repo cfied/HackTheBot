@@ -43,34 +43,6 @@ socket.on('chat message', function(msg){
             });
             message.draw();
             console.log(text);
-              // fetching bot-response
-  /*         fetch('/message', {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                message: text
-              })
-            }).then((response) => response.json())
-            .then((responseJson) => {
-                console.log("received response");
-                console.log((responseJson.answer));
-                message_side = 'left';
-                message = new Message({
-                    text: responseJson.answer,
-                    message_side: message_side
-                });
-                var l = text.length*800;
-                setTimeout(function () {
-                  message.draw();
-                }, l);
-             })
-            .catch((error) => {
-              console.error(error);
-            });*/
-
 
             return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
         };

@@ -1,3 +1,11 @@
+/* TO-DO:
+
+  save which user sent message, so that reloading doesn't cause a switch of the slide
+  figure out why callback error only occurs remotely
+  return correct feedback
+
+*/
+
 // human or bot
 var mode = 0
 var express = require('express');
@@ -351,7 +359,7 @@ app.get('/css', function (req, res) {
 // connect to bot or user
 app.get('/js', function (req, res) {
    rand = Math.random();
-   if(rand < 0){
+   if(rand < 0.5){
      file = 'js/chat.js'
      mode = 0
    }else{
