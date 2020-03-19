@@ -25,20 +25,18 @@ socket.on('chat message', function(msg){
     };
     $(function () {
         var getMessageText, message_side, sendMessage;
-        message_side = 'right';
         getMessageText = function () {
             var $message_input;
             $message_input = $('.message_input');
             return $message_input.val();
         };
-        sendMessage = function (text) {
+        sendMessage = function (text, message_side) {
             var $messages, message;
             if (text.trim() === '') {
                 return;
             }
             $('.message_input').val('');
             $messages = $('.messages');
-            message_side = 'right';
             message = new Message({
                 text: text,
                 message_side: message_side
@@ -84,7 +82,7 @@ socket.on('chat message', function(msg){
             console.log(error);
           }
           console.log(socket);
-          return sendMessage(getMessageText());
+          return sendMessage(getMessageText(),'right');
         });
         $('.message_input').keyup(function (e) {
             if (e.which === 13) {
@@ -95,12 +93,12 @@ socket.on('chat message', function(msg){
                 console.log(error);
               }
               console.log(socket);
-              return sendMessage(getMessageText());
+              return sendMessage(getMessageText(), 'right');
             }
         });
         socket.on('chat message', function(msg){
             console.log(msg);
-            sendMessage(msg);
+            sendMessage(msg,'left');
             window.scrollTo(0, document.body.scrollHeight);
         });
 
