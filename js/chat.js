@@ -1,6 +1,9 @@
 var socket = io();
 socket.on('connect', () => {
   console.log(socket.id);
+socket.on('chat message', function(msg){
+  console.log("Received message" + msg)
+})
 });
 
 (function () {
@@ -78,6 +81,7 @@ socket.on('connect', () => {
       //      socket.on('connect',() =>{
       //        console.log(socket.id);
       //      });
+            e.preventDefault();
             socket.emit('chat message', getMessageText);
           }catch(error){
             console.log(error);
@@ -91,8 +95,8 @@ socket.on('connect', () => {
       //          socket.on('connect',() =>{
       //            console.log(socket.id);
       //          });
-                socket.emit('chat message', getMessageText);
-                console.log(socket);
+                e.preventDefault();
+                socket.emit('chat message', getMessageText());
               }catch(error){
                 console.log(error);
               }
@@ -101,8 +105,8 @@ socket.on('connect', () => {
             }
         });
         socket.on('chat message', function(msg){
-            console.log(text(msg));
-            sendMessage(text(msg));
+            console.log(msg);
+            sendMessage(msg);
             window.scrollTo(0, document.body.scrollHeight);
         });
 

@@ -20,7 +20,7 @@ io.on('connection', function(socket){
   console.log('user connected');
   socket.on('chat message', function(msg){
 		console.log("Socket message: " + msg);
-		socket.broadcast.emit();
+		socket.broadcast.emit('chat message', msg);
   });
 });
 
@@ -377,7 +377,5 @@ app.post('/message', function(req, res){
 })
 
 http.listen(3000, function () {
-	 console.log(trigger.length)
-	 console.log(reply.length)
-   console.log("Example app listening")
+   console.log("Server online")
 })
