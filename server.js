@@ -1,3 +1,5 @@
+// human or bot
+var mode = 0
 var express = require('express');
 var fs = require('fs');
 var app = express();
@@ -20,7 +22,9 @@ io.on('connection', function(socket){
   console.log('user connected');
   socket.on('chat message', function(msg){
 		console.log("Socket message: " + msg);
-		socket.broadcast.emit('chat message', msg);
+    if(mode == 1){
+		  socket.broadcast.emit('chat message', msg);
+    }
   });
 });
 
@@ -244,8 +248,6 @@ var reply = [
 
 
 
-	//der mittelmäßige kram ist mein Verschulden
-	//und dieser kommentar wird wohl leider nicht demnächst entfernt werden können
 ];
 var alternative = ["Haha...", "Eh...", "Sorry cant talk right now", "You're annoying. i dont want to talk about it", "what are you talking about", "Maybe.. lets see", "Well, what do you think about it?"];
 
@@ -276,7 +278,6 @@ function compare(arr, array, string){
 
 // welcome page
 app.get('/', function (req, res) {
-   //console.log("Got a GET request for the homepage");
    fs.readFile('html/index.html', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(data);
@@ -285,7 +286,6 @@ app.get('/', function (req, res) {
 })
 
 app.get('/js_welcome', function (req, res) {
-   //console.log("Got a GET request for the homepage");
    fs.readFile('js/jque.js', function(err, data) {
         res.writeHead(200, {'Content-Type': 'application/javascript'});
         res.write(data);
@@ -294,7 +294,6 @@ app.get('/js_welcome', function (req, res) {
 })
 
 app.get('/css_welcome', function (req, res) {
-   //console.log("Got a GET request for the homepage");
    fs.readFile('css/style.css', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/css'});
         res.write(data);
@@ -303,7 +302,6 @@ app.get('/css_welcome', function (req, res) {
 })
 
 app.get('/css_boot', function (req, res) {
-   //console.log("Got a GET request for the homepage");
    fs.readFile('css/bootstrap.min.css', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/css'});
         res.write(data);
@@ -312,7 +310,6 @@ app.get('/css_boot', function (req, res) {
 })
 
 app.get('/png_robot', function (req, res) {
-   //console.log("Got a GET request for the homepage");
    fs.readFile('images/ban-1.png', function(err, data) {
         res.writeHead(200, {'Content-Type': 'image/png'});
         res.write(data);
@@ -321,7 +318,6 @@ app.get('/png_robot', function (req, res) {
 })
 
 app.get('/jpg_background', function (req, res) {
-   //console.log("Got a GET request for the homepage");
    fs.readFile('images/bg-1.jpg', function(err, data) {
         res.writeHead(200, {'Content-Type': 'image/jpg'});
         res.write(data);
@@ -341,8 +337,8 @@ app.get('/chat', function (req, res) {
    });
 })
 
+
 app.get('/css', function (req, res) {
-   //console.log("Got a GET request for the homepage");
    fs.readFile('css/chat.css', function(err, data) {
       res.writeHead(200, {'Content-Type': 'text/css'});
       res.write(data);
@@ -350,9 +346,17 @@ app.get('/css', function (req, res) {
    });
 })
 
+// connect to bot or user
 app.get('/js', function (req, res) {
-   //console.log("Got a GET request for the homepage");
-   fs.readFile('js/chat.js', function(err, data) {
+   rand = Math.random();
+   if(rand < 0){
+     file = 'js/chat.js'
+     mode = 0
+   }else{
+     file = 'js/chat_human.js'
+     mode = 1
+   }
+   fs.readFile(file, function(err, data) {
         res.writeHead(200, {'Content-Type': 'application/javascript'});
         res.write(data);
         res.end();

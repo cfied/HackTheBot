@@ -78,9 +78,6 @@ socket.on('chat message', function(msg){
         };
         $('.send_message').click(function (e) {
           try{
-      //      socket.on('connect',() =>{
-      //        console.log(socket.id);
-      //      });
             e.preventDefault();
             socket.emit('chat message', getMessageText);
           }catch(error){
@@ -92,9 +89,6 @@ socket.on('chat message', function(msg){
         $('.message_input').keyup(function (e) {
             if (e.which === 13) {
               try{
-      //          socket.on('connect',() =>{
-      //            console.log(socket.id);
-      //          });
                 e.preventDefault();
                 socket.emit('chat message', getMessageText());
               }catch(error){
