@@ -107,3 +107,16 @@ socket.on('chat message', function(msg){
 
     });
 }.call(this));
+
+function resultsbox(guess){
+
+  if (guess == 0){
+    if (confirm("You are correct! :)")){
+      window.location.href='/';
+    }
+  }else{
+    if (confirm("Oh no :( You guessed wrong!")){
+      window.location.href='/';
+    }
+  }
+}

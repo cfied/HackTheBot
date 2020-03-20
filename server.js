@@ -1,8 +1,9 @@
 /* TO-DO:
 
-  save which user sent message, so that reloading doesn't cause a switch of the slide
+  save which user sent message (reloading cause a switch of the side,
+  messages are kept for next turn)
   figure out why callback error only occurs remotely
-  return correct feedback
+  design decision, two js files for chat seems redundant
 
 */
 
@@ -295,14 +296,6 @@ app.get('/', function (req, res) {
       });
 })
 
-app.get('/js_welcome', function (req, res) {
-   fs.readFile('js/jque.js', function(err, data) {
-        res.writeHead(200, {'Content-Type': 'application/javascript'});
-        res.write(data);
-        res.end();
-      });
-})
-
 app.get('/css_welcome', function (req, res) {
    fs.readFile('css/style.css', function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/css'});
@@ -380,6 +373,7 @@ app.get('/welcome', function (req, res){
 
 //figure out if to send as string or create json file
 app.post('/message', function(req, res){
+  console.log("This actually happens")
 	console.log((JSON.stringify(req.body.message)));
 	if(JSON.stringify(req.body.message)==="h"){
 		console.log("They are the same");
