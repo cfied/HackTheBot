@@ -1,0 +1,2 @@
+- delete messages when reloading
+- create rooms
