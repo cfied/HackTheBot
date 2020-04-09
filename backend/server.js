@@ -8,7 +8,7 @@ var port = process.env.PORT || 3000;
 // human or bot
 var mode = {}
 var available_rooms = [];
-var messages = {};
+var messages = {'-1':[]};
 
 app.use(express.json());
 i = -1;
@@ -17,7 +17,7 @@ i = -1;
 function assign_room_number(id){
   console.log("available " + available_rooms );
   rand = Math.random();
-  if(rand < 0){
+  if(rand < 0.5){
     mode[id] = 0;
   }else{
     mode[id] = 1;
@@ -50,17 +50,18 @@ io.on('connection', function(socket){
     if(room != -1){
       socket.join(room);
     }
+    console.log(messages[room]);
+    for(index in messages[room]){
+        socket.emit('chat message', messages[room][index]);
+    }
   });
 
-  for(message in messages[room]){
-      socket.emit('chat message', message);
-  }
 
   socket.on('chat message', function(msg){
     // send message to other user in human mode
     if(mode[socket.id] == 1){
-      console.log(messages);
       messages[room].push(msg);
+      console.log(messages);
   		socket.to(room).broadcast.emit('chat message', msg);
     // or send bot response
     }else{
@@ -82,13 +83,15 @@ io.on('connection', function(socket){
 
       }
     }
-    console.log(bool);
     socket.emit('mode bool', bool.toString());
 
   });
 
   socket.on('leave',() => {
     socket.leave(room);
+    if(available_rooms.includes(room)){
+      available_rooms.remove(room);
+    }
   });
 });
 
