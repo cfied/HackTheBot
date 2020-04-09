@@ -1,43 +1,64 @@
-const bot = require('./bot');
-/* TO-DO:
-
-  save which user sent message (reloading cause a switch of the side,
-  messages are kept for next turn)
-  figure out why callback error only occurs remotely
-  design decision, two js files for chat seems redundant
-
-*/
-
-// human or bot
-var mode = 0
+var bot = require('./bot');
 var express = require('express');
 var fs = require('fs');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
-
-var messages = [];
-
-console.log(messages);
+// human or bot
+var mode = 0
+var available_rooms = [];
+var messages = {};
+var assigned = {};
 
 app.use(express.json());
+i = -1;
 
+// returns room number and assigns partners if possible
+function assign_room_number(id){
+  if(mode == 0){
+    return -1;
+  }else{
+    if(available_rooms.length != 0){
+      room = available_rooms.pop();
+      assigned_rooms[id] = room[1];
+      assigned_rooms[room[1]] = id;
+      return room[0];
+    }else{
+      i++;
+      available_rooms.push((i, id));
+      messages[i] = [];
+      return i;
+    }
+  }
+}
 
 io.on('connection', function(socket){
+  var room;
   console.log('user connected');
-  for(var i = 0; i < messages.length; i++){
-    socket.emit('chat message', messages[i]);
-    console.log(messages[i]);
-  }
-  socket.on('chat message', function(msg){
-		console.log("Socket message: " + msg);
-    messages.push(msg);
-    console.log(messages.toString())
-    if(mode == 1){
-		  socket.broadcast.emit('chat message', msg);
+  socket.on('request room number', () => {
+    room = assign_room_number(socket.id);
+    if(room != -1){
+      socket.join(room);
     }
   });
+  for(message in messages[room]){
+      socket.emit('chat message', message);
+  }
+  socket.on('chat message', function(msg){
+    // send message to other user in human mode
+    if(mode == 1){
+      messages[room].push(msg);
+  		socket.to(room).broadcast.emit('chat message', msg);
+    // or send bot response
+    }else{
+      socket.emit('chat message',bot.respond(msg));
+    }
+  });
+  socket.on('check mode', function(val){
+    bool = Number(val) == mode;
+    socket.emit('mode bool', bool.toString());
+  })
 });
 
 
@@ -83,7 +104,6 @@ app.get('/jpg_background', function (req, res) {
 })
 
 
-
 // starting chat
 app.get('/chat', function (req, res) {
    console.log("Got a GET request for the homepage");
@@ -107,35 +127,15 @@ app.get('/css', function (req, res) {
 app.get('/js', function (req, res) {
    rand = Math.random();
    if(rand < 0.5){
-     file = 'js/chat.js'
      mode = 0
    }else{
-     file = 'js/chat_human.js'
      mode = 1
    }
-   fs.readFile(file, function(err, data) {
+   fs.readFile('js/chat.js', function(err, data) {
         res.writeHead(200, {'Content-Type': 'application/javascript'});
         res.write(data);
         res.end();
       });
-})
-
-app.get('/welcome', function (req, res){
-  console.log("Yay, send myself a request");
-  res.send("Lovely to see you");
-})
-
-//figure out if to send as string or create json file
-app.post('/message', function(req, res){
-  console.log("This actually happens")
-	console.log((JSON.stringify(req.body.message)));
-	if(JSON.stringify(req.body.message)==="h"){
-		console.log("They are the same");
-	}
-	res.writeHead(200, {'Content-Type': 'application/json'});
-	var jsonObj = {'answer':bot.respond(JSON.stringify(req.body.message))};
-	res.write(JSON.stringify(jsonObj));
-	res.end();
 })
 
 http.listen(3000, function () {

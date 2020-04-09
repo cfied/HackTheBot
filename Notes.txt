@@ -1,2 +1,15 @@
-- delete messages when reloading
-- create rooms
+- time delay in backend
+- exit room when round finished
+
+- what should happen if page is being reloaded?
+- timer, points, starting/waiting for opponent
+
+
+figure out why callback error only occurs remotely
+
+
+
+
+Source-Map-Fehler: Error: request failed with status 404
+Ressourcen-Adresse: http://localhost:3000/css_boot
+Source-Map-Adresse: bootstrap.min.css.map
