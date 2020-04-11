@@ -56,7 +56,6 @@ io.on('connection', function(socket){
     }
   });
 
-
   socket.on('chat message', function(msg){
     // send message to other user in human mode
     if(mode[socket.id] == 1){
@@ -65,7 +64,10 @@ io.on('connection', function(socket){
   		socket.to(room).broadcast.emit('chat message', msg);
     // or send bot response
     }else{
-      socket.emit('chat message',bot.respond(msg));
+      response = bot.respond(msg)
+      setTimeout(function(){
+          socket.emit('chat message',response);
+      },response.length*300);
     }
   });
 
@@ -80,7 +82,6 @@ io.on('connection', function(socket){
         socket.to(room).broadcast.emit('decision', 'Oh no. Your opponent found out that you are a human.');
       }else{
         socket.to(room).broadcast.emit('decision', 'Congratulations! You tricked your opponent into thinking that you are a bot.');
-
       }
     }
     socket.emit('mode bool', bool.toString());
@@ -137,7 +138,6 @@ app.get('/jpg_background', function (req, res) {
       });
 })
 
-
 // starting chat
 app.get('/chat', function (req, res) {
    console.log("Got a GET request for the homepage");
@@ -147,7 +147,6 @@ app.get('/chat', function (req, res) {
       res.end();
    });
 })
-
 
 app.get('/css', function (req, res) {
    fs.readFile('../css/chat.css', function(err, data) {
