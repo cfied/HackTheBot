@@ -73,17 +73,25 @@ socket.on('connect', () => {
     });
 }.call(this));
 
+socket.on('decision',function(decision){
+    if (confirm(decision)){
+      socket.emit('leave');
+      window.location.href='/';
+    }
+})
+
 function resultsbox(guess){
   console.log(guess);
   socket.emit('check mode', guess);
   socket.on('mode bool', function(bool){
-    if(bool == true){
-      console.log(bool);
+    if(Boolean(Number(bool))){
       if (confirm("You are correct! :)")){
+        socket.emit('leave');
         window.location.href='/';
       }
     }else{
       if (confirm("Oh no :( You guessed wrong!")){
+        socket.emit('leave');
         window.location.href='/';
       }
     }

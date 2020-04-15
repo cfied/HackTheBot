@@ -1,15 +1,12 @@
-- time delay in backend
-- exit room when round finished
-
+TO-DO
+- integrating database
+- creating user to combine different sockets
 - what should happen if page is being reloaded?
 - timer, points, starting/waiting for opponent
+- messages disappearing when writing at the same time
 
 
-figure out why callback error only occurs remotely
-
-
-
-
-Source-Map-Fehler: Error: request failed with status 404
-Ressourcen-Adresse: http://localhost:3000/css_boot
-Source-Map-Adresse: bootstrap.min.css.map
+Issues
+- mobil: beim Verlassen der Seite wird offenbar neue Session ID zugewiesen
+ Verbindung zu neuem Chatroom ohne Löschen der alten Nachrichten,
+ kein Pop-up beim Partner
