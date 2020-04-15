@@ -1,4 +1,8 @@
+// TO-DO: switch storage of messages and room members to database
+
 var bot = require('./bot');
+var database = require('./database');
+
 var express = require('express');
 var fs = require('fs');
 var app = express();
@@ -50,17 +54,22 @@ io.on('connection', function(socket){
     if(room != -1){
       socket.join(room);
     }
-    console.log(messages[room]);
-    for(index in messages[room]){
-        socket.emit('chat message', messages[room][index]);
-    }
+    database.get_messages(room).then(rows => {
+      console.log(rows[0]);
+      for(index in rows){
+        console.log(rows[index].content);
+        socket.emit('chat message', rows[index].content);
+      }
+    });
   });
 
   socket.on('chat message', function(msg){
     // send message to other user in human mode
+    database.add_message(socket.id,room,msg);
+
     if(mode[socket.id] == 1){
       messages[room].push(msg);
-      console.log(messages);
+    //  console.log(messages);
   		socket.to(room).broadcast.emit('chat message', msg);
     // or send bot response
     }else{
