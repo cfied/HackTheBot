@@ -44,6 +44,7 @@ function assign_room_number(id){
   }
 }
 
+// when user connects, assign a room number and display messages
 io.on('connection', function(socket){
   var room;
   console.log('user connected');
@@ -64,12 +65,10 @@ io.on('connection', function(socket){
   });
 
   socket.on('chat message', function(msg){
-    // send message to other user in human mode
     database.add_message(socket.id,room,msg);
-
+    // send message to other user in human mode
     if(mode[socket.id] == 1){
       messages[room].push(msg);
-    //  console.log(messages);
   		socket.to(room).broadcast.emit('chat message', msg);
     // or send bot response
     }else{
@@ -99,6 +98,7 @@ io.on('connection', function(socket){
 
   socket.on('leave',() => {
     socket.leave(room);
+    database.delete_room(room);
     if(available_rooms.includes(room)){
       available_rooms.remove(room);
     }
