@@ -1,4 +1,4 @@
-// TO-DO: switch storage of messages and room members to database
+// TO-DO: switch storage of available rooms and room members to database
 
 var bot = require('./bot');
 var database = require('./database');
@@ -9,13 +9,11 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
-// human or bot
+app.use(express.json());
+// 0 : bot or 1: human
 var mode = {}
 var available_rooms = [];
-var messages = {'-1':[]};
-
-app.use(express.json());
-i = -1;
+var i = -1;
 
 // returns room number and assigns partners if possible
 function assign_room_number(id){
@@ -38,7 +36,6 @@ function assign_room_number(id){
       i++;
       available_rooms.push([i, id]);
       console.log("available " + available_rooms);
-      messages[i] = [];
       return i;
     }
   }
@@ -64,11 +61,11 @@ io.on('connection', function(socket){
     });
   });
 
+  // received chat message from user
   socket.on('chat message', function(msg){
     database.add_message(socket.id,room,msg);
     // send message to other user in human mode
     if(mode[socket.id] == 1){
-      messages[room].push(msg);
   		socket.to(room).broadcast.emit('chat message', msg);
     // or send bot response
     }else{
@@ -78,7 +75,7 @@ io.on('connection', function(socket){
       },response.length*300);
     }
   });
-
+  // user took a guess
   socket.on('check mode', function(val){
     if(Number(val) == mode[socket.id]){
       bool = 1;
@@ -95,7 +92,7 @@ io.on('connection', function(socket){
     socket.emit('mode bool', bool.toString());
 
   });
-
+  // user confirmed result
   socket.on('leave',() => {
     socket.leave(room);
     database.delete_room(room);

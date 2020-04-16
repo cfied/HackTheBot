@@ -1,12 +1,18 @@
 TO-DO
-- integrating database
-- creating user to combine different sockets
-- what should happen if page is being reloaded?
-- timer, points, starting/waiting for opponent
-- messages disappearing when writing at the same time
+- integrating rooms in database
+- timer, points, opportunity to keep playing => cookies?
+- starting/waiting for opponent
+
+
+Database Design:
+User Table containing current Match instead of room?
+Then deleting entries by userid instead of room?
+Maybe getting rid of rooms alltogether and just assigning partners...
+need to figure out how to send to specific socket instead of room broadcasting
 
 
 Issues
 - mobil: beim Verlassen der Seite wird offenbar neue Session ID zugewiesen
  Verbindung zu neuem Chatroom ohne Löschen der alten Nachrichten,
  kein Pop-up beim Partner
+- messages disappearing when writing at the same time
