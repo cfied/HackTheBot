@@ -50,11 +50,16 @@ async function assign_available_user(partner){
   sql = "SELECT user_id FROM users WHERE partner = ?";
   const [rows, fields] = await pool.execute(sql,[partner]);
   console.log(rows);
-  available = rows[0].user_id;
-  add_user(partner, available);
+  if(rows[0] == undefined){
+    available = String(-2);
+    console.log("no partner available");
+  }else{
+    available = rows[0].user_id;
+  }
+  await add_user(partner, available);
+  console.log(available);
+  return available;
 }
-
-
 
 module.exports.add_message = add_message;
 module.exports.get_messages = get_messages;

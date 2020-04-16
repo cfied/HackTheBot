@@ -17,7 +17,7 @@ var matched = {};
 
 // returns room number and assigns partners if possible
 // room -1 : chatbot room -2 : awaiting connection
-function assign_room_number(id){
+async function assign_room_number(id){
   rand = Math.random();
   if(rand < 0.5){
     mode[id] = 0;
@@ -29,16 +29,10 @@ function assign_room_number(id){
     database.add_user(id,-1);
     matched[id] = -1
   }else{
-    if(available_rooms.length != 0){
-      partner = available_rooms.pop();
-      matched[id] = partner;
-      matched[partner] = id;
-      database.assign_available_user(id);
-    }else{
-      available_rooms.push(id);
-      matched[id] = -2;
-      database.add_user(id,-2);
-    }
+    await database.assign_available_user(id);
+    console.log("found available: " + available);
+    matched[id] = available;
+    matched[available] = id;
   }
 }
 
@@ -48,18 +42,19 @@ io.on('connection', function(socket){
   console.log('user connected');
 
   socket.on('request room number', () => {
-    assign_room_number(socket.id);
-    partner = matched[socket.id];
-    console.log("matched " + socket.id + " to "+ partner);
-    if(partner != -1 && partner != -2){
-      database.get_messages(partner).then(rows => {
-        console.log(rows[0]);
-        for(index in rows){
-          console.log(rows[index].content);
-          socket.emit('chat message', rows[index].content);
+      assign_room_number(socket.id).then(() => {
+        partner = matched[socket.id];
+        console.log("matched " + socket.id + " to "+ partner);
+        if(partner != -1 && partner != -2){
+          database.get_messages(partner).then(rows => {
+            console.log(rows[0]);
+            for(index in rows){
+              console.log(rows[index].content);
+              socket.emit('chat message', rows[index].content);
+            }
+          });
         }
       });
-    }
   });
 
   // received chat message from user
