@@ -30,11 +30,34 @@ async function get_messages(partner){
   return rows;
 }
 
-async function delete_messages(user1, user2){
+async function delete_chat(user1, user2){
   sql = "DELETE FROM messages WHERE user_id = ? OR user_id = ?;";
+  await pool.execute(sql, [user1, user2]);
+  sql = "DELETE FROM users WHERE user_id = ? OR user_id = ?;";
   await pool.execute(sql, [user1, user2]);
 }
 
+async function add_user(user_id, partner){
+  sql = "INSERT INTO users (user_id, partner) VALUES (?,?);";
+  await pool.execute(sql, [user_id, partner]);
+}
+
+async function assign_available_user(partner){
+  console.log(partner);
+  sql = "UPDATE users SET partner = ? WHERE partner = -2 LIMIT 1;";
+  await pool.execute(sql,[partner]);
+
+  sql = "SELECT user_id FROM users WHERE partner = ?";
+  const [rows, fields] = await pool.execute(sql,[partner]);
+  console.log(rows);
+  available = rows[0].user_id;
+  add_user(partner, available);
+}
+
+
+
 module.exports.add_message = add_message;
 module.exports.get_messages = get_messages;
-module.exports.delete_messages = delete_messages;
+module.exports.delete_chat = delete_chat;
+module.exports.add_user = add_user;
+module.exports.assign_available_user = assign_available_user;

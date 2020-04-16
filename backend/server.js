@@ -26,15 +26,18 @@ function assign_room_number(id){
   }
 
   if(mode[id] == 0){
+    database.add_user(id,-1);
     matched[id] = -1
   }else{
     if(available_rooms.length != 0){
       partner = available_rooms.pop();
       matched[id] = partner;
       matched[partner] = id;
+      database.assign_available_user(id);
     }else{
       available_rooms.push(id);
       matched[id] = -2;
+      database.add_user(id,-2);
     }
   }
 }
@@ -99,7 +102,7 @@ io.on('connection', function(socket){
   // user confirmed result
   socket.on('leave',() => {
     partner = matched[socket.id];
-    database.delete_messages(socket.id, String(partner));
+    database.delete_chat(socket.id, String(partner));
     delete(matched[socket.id]);
     if(available_rooms.includes(socket.id)){
       available_rooms.splice(available_rooms.indexOf(socket.id),1);
