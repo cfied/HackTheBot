@@ -44,21 +44,27 @@ async function add_user(user_id, partner){
 
 async function assign_available_user(partner){
   console.log(partner);
-  sql = "UPDATE users SET partner = ? WHERE partner = -2 LIMIT 1;";
+  sql = "UPDATE users SET partner = ? WHERE partner = '0' LIMIT 1;";
   await pool.execute(sql,[partner]);
 
   sql = "SELECT user_id FROM users WHERE partner = ?";
   const [rows, fields] = await pool.execute(sql,[partner]);
   console.log(rows);
   if(rows[0] == undefined){
-    available = String(-2);
+    available = String(0);
     console.log("no partner available");
   }else{
-    available = rows[0].user_id;
+    available = String(rows[0].user_id);
   }
   await add_user(partner, available);
   console.log(available);
   return available;
+}
+
+async function get_partner(user_id){
+  sql = "SELECT partner FROM users WHERE user_id = ?";
+  const[rows, fields] = await pool.execute(sql,[user_id]);
+  return rows[0].partner;
 }
 
 module.exports.add_message = add_message;
@@ -66,3 +72,4 @@ module.exports.get_messages = get_messages;
 module.exports.delete_chat = delete_chat;
 module.exports.add_user = add_user;
 module.exports.assign_available_user = assign_available_user;
+module.exports.get_partner = get_partner;

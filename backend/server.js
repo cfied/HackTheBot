@@ -1,8 +1,5 @@
-// TO-DO: switch storage of available rooms and room members to database
-
 var bot = require('./bot');
 var database = require('./database');
-
 var express = require('express');
 var fs = require('fs');
 var app = express();
@@ -10,29 +7,18 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
 app.use(express.json());
-// 0 : bot or 1: human
-var mode = {}
-var available_rooms = [];
-var matched = {};
 
 // returns room number and assigns partners if possible
 // room -1 : chatbot room -2 : awaiting connection
 async function assign_room_number(id){
+  var partner;
   rand = Math.random();
   if(rand < 0.5){
-    mode[id] = 0;
+    await database.add_user(id,"-1");
+    available = "-1"
+    return available;
   }else{
-    mode[id] = 1;
-  }
-
-  if(mode[id] == 0){
-    database.add_user(id,-1);
-    matched[id] = -1
-  }else{
-    await database.assign_available_user(id);
-    console.log("found available: " + available);
-    matched[id] = available;
-    matched[available] = id;
+    return await database.assign_available_user(id);
   }
 }
 
@@ -42,14 +28,12 @@ io.on('connection', function(socket){
   console.log('user connected');
 
   socket.on('request room number', () => {
-      assign_room_number(socket.id).then(() => {
-        partner = matched[socket.id];
+      assign_room_number(socket.id).then((available) => {
+        partner = available;
         console.log("matched " + socket.id + " to "+ partner);
-        if(partner != -1 && partner != -2){
+        if(Number(partner) != -1 && Number(partner) != 0){
           database.get_messages(partner).then(rows => {
-            console.log(rows[0]);
             for(index in rows){
-              console.log(rows[index].content);
               socket.emit('chat message', rows[index].content);
             }
           });
@@ -59,49 +43,44 @@ io.on('connection', function(socket){
 
   // received chat message from user
   socket.on('chat message', function(msg){
-    partner = matched[socket.id];
-    database.add_message(socket.id,msg);
-    // send message to other user in human mode
-    if(mode[socket.id] == 1){
-      if(partner != -2){
-        socket.to(partner).emit('chat message', msg);
+    database.get_partner(socket.id).then(partner => {
+      database.add_message(socket.id,msg);
+      if(Number(partner) == -1){
+        // send bot response
+        response = bot.respond(msg)
+        setTimeout(function(){
+            socket.emit('chat message',response);
+        },response.length*300);
+      }else{
+        // send message to other user in human mode
+        if(Number(partner) != 0){
+          socket.to(partner).emit('chat message', msg);
+        }
       }
-    // or send bot response
-    }else{
-      response = bot.respond(msg)
-      setTimeout(function(){
-          socket.emit('chat message',response);
-      },response.length*300);
-    }
+    });
   });
+
   // user took a guess
   socket.on('check mode', function(val){
-    partner = matched[socket.id];
-    if(Number(val) == mode[socket.id]){
-      bool = 1;
-    }else{
-      bool = 0;
-    }
-    if(mode[socket.id] == 1){
-      if(partner != -2){
+    database.get_partner(socket.id).then(partner => {
+      var mode = Number(partner) >= 0 ? 0 : -1;
+      bool = val == mode ? 1 : 0;
+      if(Number(partner) != -1 && Number(partner) != 0){
         if(bool == 1){
           socket.to(partner).emit('decision', 'Oh no. Your opponent found out that you are a human.');
         }else{
           socket.to(partner).emit('decision', 'Congratulations! You tricked your opponent into thinking that you are a bot.');
         }
       }
-    }
-    socket.emit('mode bool', bool.toString());
-
+      socket.emit('mode bool', bool.toString());
+    });
   });
+
   // user confirmed result
   socket.on('leave',() => {
-    partner = matched[socket.id];
-    database.delete_chat(socket.id, String(partner));
-    delete(matched[socket.id]);
-    if(available_rooms.includes(socket.id)){
-      available_rooms.splice(available_rooms.indexOf(socket.id),1);
-    }
+    database.get_partner(socket.id).then(partner => {
+      database.delete_chat(socket.id, String(partner));
+    });
   });
 });
 

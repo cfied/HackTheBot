@@ -1,6 +1,5 @@
 var socket = io();
 socket.on('connect', () => {
-  console.log(socket.id);
   socket.emit('request room number');
 });
 
@@ -40,8 +39,6 @@ socket.on('connect', () => {
                 message_side: message_side
             });
             message.draw();
-            console.log(text);
-
             return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
         };
         $('.send_message').click(function (e) {
@@ -51,7 +48,6 @@ socket.on('connect', () => {
           }catch(error){
             console.log(error);
           }
-          console.log(socket);
           return sendMessage(getMessageText(),'right');
         });
         $('.message_input').keyup(function (e) {
@@ -62,7 +58,6 @@ socket.on('connect', () => {
               }catch(error){
                 console.log(error);
               }
-              console.log(socket);
               return sendMessage(getMessageText(),'right');
             }
         });
@@ -81,10 +76,9 @@ socket.on('decision',function(decision){
 })
 
 function resultsbox(guess){
-  console.log(guess);
   socket.emit('check mode', guess);
   socket.on('mode bool', function(bool){
-    if(Boolean(Number(bool))){
+    if(Number(bool) == 1){
       if (confirm("You are correct! :)")){
         socket.emit('leave');
         window.location.href='/';
