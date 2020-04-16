@@ -2,14 +2,15 @@
 
 const USER = 'message handler';
 const PASSWORD = 'HLS56kdllvlj)lj582wP.8rUls8';
-const parameters = {
+
+const mysql = require('mysql2/promise');
+const pool = mysql.createPool({
   host: "localhost",
   user: USER,
   password: PASSWORD,
   database: "hackthebot"
-};
-
-
+});
+pool.pool.config.connectionConfig.namedPlaceholders = true;
 
 // user table format:
 // "CREATE TABLE users (user_id VARCHAR(255), room_id INT, PRIMARY KEY(user_id));"
@@ -19,35 +20,19 @@ const parameters = {
 
 
 async function add_message(user_id, room_id, message_content){
-  console.log("add message");
-  const mysql = require('mysql2');
-  const con = mysql.createConnection(parameters);
-  con.config.namedPlaceholders = true;
   sql = "INSERT INTO messages (user_id,room_id,content) VALUES (?,?,?);";
-  await con.execute(sql, [user_id, room_id, message_content]);
-  await con.end();
+  await pool.execute(sql, [user_id, room_id, message_content]);
 }
 
 async function get_messages(room_id){
-  const mysql = require('mysql2/promise');
-  const con = await mysql.createConnection(parameters);
-  con.config.namedPlaceholders = true;
   sql = "SELECT * FROM messages WHERE room_id = ?;";
-  const [rows, fields] = await con.execute(sql,[room_id]);
-  console.log("got results");
-  console.log("Get messages: " + JSON.stringify(rows[0]));
-  await con.end();
+  const [rows, fields] = await pool.execute(sql,[room_id]);
   return rows;
 }
 
 async function delete_room(room_id){
-  console.log("delete room");
-  const mysql = require('mysql2');
-  const con = await mysql.createConnection(parameters);
-  con.config.namedPlaceholders = true;
   sql = "DELETE FROM messages WHERE room_id = ?;";
-  await con.execute(sql, [room_id]);
-  await con.end();
+  await pool.execute(sql, [room_id]);
 }
 
 module.exports.add_message = add_message;
