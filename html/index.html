@@ -3,26 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link rel="stylesheet" href="/css_boot">
     <link rel="stylesheet" href="/css_welcome">
-
     <title>Hack The Bot!</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        .imgbox {
-            display: grid;
-            height: 100%;
-        }
-        .center-fit {
-            max-width: 100%;
-            max-height: 100vh;
-            margin: auto;
-        }
-    </style>
   </head>
   <body>
 
@@ -34,6 +17,14 @@
               <span face ="verdana" class="tagline">Are you ready to face the ultimate challenge?<br><br></span>
               <font color ="#403b40" face="verdana" size = "7">Hack the Bot<br><br></font>
               <button class="btn-default" onclick="window.location.href = '/chat';">START</button>
+              <span face ="verdana" class="tagline" id="result">
+              <script type = "text/javascript">
+                  if ( sessionStorage.points ) {
+                    document.getElementById("result").innerHTML = "Points: " + sessionStorage.points;
+                  }else{
+                    sessionStorage.points = 0;
+                  }
+              </script>
             </div>
           </div>
           <div class="col-md-5 order-0 order-md-1">

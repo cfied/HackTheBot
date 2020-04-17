@@ -81,6 +81,7 @@ function resultsbox(guess){
     if(Number(bool) == 1){
       if (confirm("You are correct! :)")){
         socket.emit('leave');
+        sessionStorage.points = Number(sessionStorage.points) + 1;
         window.location.href='/';
       }
     }else{

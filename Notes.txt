@@ -1,6 +1,4 @@
 TO-DO
-- use procedure or lock to make sure that assignment 
-  does happen sequential
 - timer, points, opportunity to keep playing => cookies?
 - starting/waiting for opponent
 - stop user from writing message after decision 
