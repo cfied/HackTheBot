@@ -63,13 +63,17 @@ io.on('connection', function(socket){
   // user took a guess
   socket.on('check mode', function(val){
     database.get_partner(socket.id).then(partner => {
-      var mode = Number(partner) >= 0 ? 0 : -1;
+      var mode = Number(partner) == -1 ? -1 : 0;
+      console.log("mode " + mode);
       bool = val == mode ? 1 : 0;
+      console.log("bool" + bool);
       if(Number(partner) != -1 && Number(partner) != 0){
         if(bool == 1){
-          socket.to(partner).emit('decision', 'Oh no. Your opponent found out that you are a human.');
+          socket.to(partner).emit('decision', 0);
+          console.log("emitted 0");
         }else{
-          socket.to(partner).emit('decision', 'Congratulations! You tricked your opponent into thinking that you are a bot.');
+          socket.to(partner).emit('decision', 1);
+          console.log("emitted 1");
         }
       }
       socket.emit('mode bool', bool.toString());
